@@ -8,6 +8,7 @@ import time
 
 ##Test
 ##test 2
+##test 3
 
 ## Give an intro to the game and explain the rules
 
