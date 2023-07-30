@@ -22,13 +22,17 @@ mydb = mysql.connector.connect(
     auth_plugin='mysql_native_password',
     host=host_info,
     user=db_user,
-    passwd=db_password
+    passwd=db_password,
+    database='scoreboard'
 )
 
 mycursor = mydb.cursor()
 
-for db in mycursor:
-    print(db)
+
+
+
+
+
 
 
 ## Give an intro to the game and explain the rules
