@@ -87,5 +87,9 @@ def get_questions():
         time.sleep(2)
 
 
-intro()
+x = requests.get('http://opentdb.com/api.php?amount=1&category=9&difficulty=easy')
+
+response = json.loads(x.text)
+
+print(response)
 

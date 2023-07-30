@@ -1,0 +1,10 @@
+type is 'multiple' or 'boolean'
+
+multiple choice questions have 4 answers. 1 correct and 3 incorrect answers
+
+boolean has two answers, 1 correct one incorrect
+
+incorrect_answers is the key for the wrong answers
+
+type is the key for multiple or boolean
+
