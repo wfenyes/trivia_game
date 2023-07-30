@@ -11,7 +11,7 @@ import mysql.connector
 ##Should allow you to choose from multiple choice questions and selecting the letter associated with the correct answer. 
 ##Should keep a record of how many you've gotten right and wrong
 
-##Database connection
+##Database connection for keeping highscores
 load_dotenv()
 
 host_info = os.getenv("host_info")
@@ -28,8 +28,16 @@ mydb = mysql.connector.connect(
 
 mycursor = mydb.cursor()
 
+sqlFormula = "INSERT INTO high_scores (name, score) VALUES (%s, %s)"
 
+highscorer1 = ('Billy', 8)
 
+mycursor.execute("SELECT * FROM high_scores")
+
+myresult = mycursor.fetchall()
+
+for row in myresult:
+    print(row)
 
 
 
