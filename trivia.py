@@ -1,6 +1,7 @@
 import requests
 import json
 import time
+import random
 
 ##Using https://opentdb.com/api_config.php to create a trivia game where you can select the number of questions you'd like, the category, and the difficulty. 
 ##Should allow you to choose from multiple choice questions and selecting the letter associated with the correct answer. 
@@ -75,21 +76,35 @@ def get_questions():
 
     for result in trivia['results']:
         data = result
+        answer_bank = []
         category = data['category']
         question = data['question']
-        answer = data['correct_answer']
+        answer_bank.append(data['correct_answer'])
+        answer_bank.extend(data['incorrect_answers'])
+        answer = data['correct_answer'] 
         print(f'The first category is: \n{category}!')
         time.sleep(2)
         print(f'{question}')
+        random.shuffle(answer_bank)
+        if data['type'] == 'multiple':
+            print(f'A.{answer_bank[0]}, B.{answer_bank[1]}, C.{answer_bank[2]}, or D.{answer_bank[3]}')
+        else:
+            print(f'A.{answer_bank[0]}, or B.{answer_bank[1]}')
+        
         user_answer = input('')
         time.sleep(2)
         print(f'The correct answer is \n{answer}')
         time.sleep(2)
 
-
+"""
 x = requests.get('http://opentdb.com/api.php?amount=1&category=9&difficulty=easy')
 
 response = json.loads(x.text)
 
 print(response)
 
+"""
+
+
+
+intro()
