@@ -1,15 +1,35 @@
+from dotenv import load_dotenv  
+import os
 import requests
 import json
 import time
 import random
+import mysql.connector
+
 
 ##Using https://opentdb.com/api_config.php to create a trivia game where you can select the number of questions you'd like, the category, and the difficulty. 
 ##Should allow you to choose from multiple choice questions and selecting the letter associated with the correct answer. 
 ##Should keep a record of how many you've gotten right and wrong
 
-##Test
-##test 2
-##test 3
+##Database connection
+load_dotenv()
+
+host_info = os.getenv("host_info")
+db_user = os.getenv("db_user")
+db_password = os.getenv("db_password")
+
+mydb = mysql.connector.connect(
+    auth_plugin='mysql_native_password',
+    host=host_info,
+    user=db_user,
+    passwd=db_password
+)
+
+mycursor = mydb.cursor()
+
+for db in mycursor:
+    print(db)
+
 
 ## Give an intro to the game and explain the rules
 
@@ -82,10 +102,14 @@ def get_questions():
         answer_bank.append(data['correct_answer'])
         answer_bank.extend(data['incorrect_answers'])
         answer = data['correct_answer'] 
+        
+        
         print(f'The first category is: \n{category}!')
         time.sleep(2)
         print(f'{question}')
-        random.shuffle(answer_bank)
+        random.shuffle(answer_bank)      
+        
+        
         if data['type'] == 'multiple':
             print(f'A.{answer_bank[0]}, B.{answer_bank[1]}, C.{answer_bank[2]}, or D.{answer_bank[3]}')
         else:
@@ -107,4 +131,3 @@ print(response)
 
 
 
-intro()
