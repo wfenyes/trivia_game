@@ -32,16 +32,6 @@ sqlFormula = "INSERT INTO high_scores (name, score) VALUES (%s, %s)"
 
 highscorer1 = ('Billy', 8)
 
-mycursor.execute("SELECT * FROM high_scores")
-
-myresult = mycursor.fetchall()
-
-for row in myresult:
-    print(row)
-
-
-
-
 
 ## Give an intro to the game and explain the rules
 
