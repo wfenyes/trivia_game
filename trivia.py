@@ -12,6 +12,7 @@ import mysql.connector
 ##Should keep a record of how many you've gotten right and wrong
 
 ##Database connection for keeping highscores
+
 load_dotenv()
 
 host_info = os.getenv("host_info")
@@ -56,6 +57,8 @@ def intro():
             time.sleep(1)
             print("I'm sorry, I don't understand. Please type yes or no when prompted.")
             continue
+    
+    
 
 ##prints the options for the categories
 
@@ -96,6 +99,8 @@ def get_questions():
                     
     trivia = json.loads(x.text)
 
+    user_score = 0
+
     for result in trivia['results']:
         data = result
         answer_bank = []
@@ -106,30 +111,55 @@ def get_questions():
         answer = data['correct_answer'] 
         
         
-        print(f'The first category is: \n{category}!')
+        print(f'\nThe category is: \n{category}!')
         time.sleep(2)
         print(f'{question}')
         random.shuffle(answer_bank)      
         
         
+
         if data['type'] == 'multiple':
-            print(f'A.{answer_bank[0]}, B.{answer_bank[1]}, C.{answer_bank[2]}, or D.{answer_bank[3]}')
+            answer_a = answer_bank[0]
+            answer_b = answer_bank[1]
+            answer_c = answer_bank[2]
+            answer_d = answer_bank[3]
+            print(f'\nA.{answer_a} \nB.{answer_b} \nC.{answer_c} \nD.{answer_d}')
         else:
-            print(f'A.{answer_bank[0]}, or B.{answer_bank[1]}')
-        
+            answer_a = answer_bank[0]
+            answer_b = answer_bank[1]
+            print(f'A.{answer_a}, or B.{answer_b}')
+            
         user_answer = input('')
+        
+        if user_answer.lower() == 'a':
+            user_answer = answer_a
+        elif user_answer.lower() == 'b':
+            user_answer = answer_b
+        elif user_answer.lower() == 'c':
+            user_answer = answer_c
+        elif user_answer.lower() == 'd':
+            user_answer = answer_d
+        else:
+            print('That is not an answer')
+        
+        if user_answer == data['correct_answer']:
+            print("That\'s right! 1 point to you.")
+            user_score += 1
+        else:
+            print('That is not the right answer.')
+            time.sleep(1)
+            print(f'The correct answer is \n{answer}')
+        
         time.sleep(2)
-        print(f'The correct answer is \n{answer}')
-        time.sleep(2)
 
-"""
-x = requests.get('http://opentdb.com/api.php?amount=1&category=9&difficulty=easy')
 
-response = json.loads(x.text)
+    print(f'\nYour score is {user_score}')    
 
-print(response)
+##Get Answers
 
-"""
 
+    
+
+intro()
 
 
