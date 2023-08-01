@@ -4,7 +4,7 @@ import requests
 import json
 import time
 import random
-import mysql.connector
+import sqlite3
 
 
 ##Using https://opentdb.com/api_config.php to create a trivia game where you can select the number of questions you'd like, the category, and the difficulty. 
@@ -15,23 +15,19 @@ import mysql.connector
 
 load_dotenv()
 
-host_info = os.getenv("host_info")
-db_user = os.getenv("db_user")
-db_password = os.getenv("db_password")
+con = sqlite3.connect("scoreboard.db")
 
-mydb = mysql.connector.connect(
-    auth_plugin='mysql_native_password',
-    host=host_info,
-    user=db_user,
-    passwd=db_password,
-    database='scoreboard'
-)
+cur = con.cursor()
 
-mycursor = mydb.cursor()
 
-sqlFormula = "INSERT INTO high_scores (name, score) VALUES (%s, %s)"
+res = cur.execute("SELECT * FROM high_scores")
+print(res.fetchall())
 
-highscorer1 = ('Billy', 8)
+
+
+
+
+
 
 
 ## Give an intro to the game and explain the rules
@@ -40,9 +36,9 @@ def intro():
     print('Welcome to Crazy Trivia!')
     time.sleep(1)
     print("""In a moment you will be given the opportunity to select the number
-          questions you'd like to be asked and what category those questions come from.
-          For a list of the categories, type 'help' after being asked for the category. 
-          Find the number associated with the category you want and choose type it in. """)
+    questions you'd like to be asked and what category those questions come from.
+    For a list of the categories, type 'help' after being asked for the category. 
+    Find the number associated with the category you want and choose type it in. """)
     
     while True:
         user_begin = input('Are you ready to begin?\n')
@@ -158,8 +154,5 @@ def get_questions():
 ##Get Answers
 
 
-    
-
-intro()
 
 
