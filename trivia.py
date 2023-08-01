@@ -5,11 +5,37 @@ import json
 import time
 import random
 import sqlite3
+import tkinter as tk
 
 
 ##Using https://opentdb.com/api_config.php to create a trivia game where you can select the number of questions you'd like, the category, and the difficulty. 
 ##Should allow you to choose from multiple choice questions and selecting the letter associated with the correct answer. 
 ##Should keep a record of how many you've gotten right and wrong
+
+##GUI work
+
+window = tk.Tk()
+
+
+
+
+window.rowconfigure(0, minsize=50, weight=1)
+window.columnconfigure([0, 1, 2, 3], minsize=50, weight=1)
+
+question_view = tk.Label(master=window, text="What is the answer?")
+question_view.grid(row=0, columnspan=4, sticky="nsew")
+
+btn_decrease = tk.Button(master=window, text="A")
+btn_decrease.grid(row=1, column=0, sticky="nsew")
+
+lbl_value = tk.Button(master=window, text="B")
+lbl_value.grid(row=1, column=1, sticky='nsew')
+
+btn_increase = tk.Button(master=window, text="C")
+btn_increase.grid(row=1, column=2, sticky="nsew")
+
+btn_d = tk.Button(master=window, text='D')
+btn_d.grid(row=1, column=3, sticky="nsew")
 
 ##Database connection for keeping highscores
 
@@ -20,8 +46,6 @@ con = sqlite3.connect("scoreboard.db")
 cur = con.cursor()
 
 
-res = cur.execute("SELECT * FROM high_scores")
-print(res.fetchall())
 
 
 
@@ -33,12 +57,12 @@ print(res.fetchall())
 ## Give an intro to the game and explain the rules
 
 def intro():
-    print('Welcome to Crazy Trivia!')
+    print('Welcome to Crazy Trivia!\n')
     time.sleep(1)
     print("""In a moment you will be given the opportunity to select the number
-    questions you'd like to be asked and what category those questions come from.
-    For a list of the categories, type 'help' after being asked for the category. 
-    Find the number associated with the category you want and choose type it in. """)
+questions you'd like to be asked and what category those questions come from.
+For a list of the categories, type 'help' after being asked for the category. 
+Find the number associated with the category you want and choose type it in. \n""")
     
     while True:
         user_begin = input('Are you ready to begin?\n')
@@ -155,4 +179,4 @@ def get_questions():
 
 
 
-
+window.mainloop()
