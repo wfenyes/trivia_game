@@ -5,6 +5,7 @@ import json
 import time
 import random
 import sqlite3
+from w3lib.html import replace_entities 
 
 
 ##Using https://opentdb.com/api_config.php to create a trivia game where you can select the number of questions you'd like, the category, and the difficulty. 
@@ -109,7 +110,7 @@ def get_questions():
         
         print(f'\nThe category is: \n{category}!')
         time.sleep(2)
-        print(f'{question}')
+        print(replace_entities(f'{question}'))
         random.shuffle(answer_bank)      
         
         
@@ -119,7 +120,7 @@ def get_questions():
             answer_b = answer_bank[1]
             answer_c = answer_bank[2]
             answer_d = answer_bank[3]
-            print(f'\nA.{answer_a} \nB.{answer_b} \nC.{answer_c} \nD.{answer_d}')
+            print(replace_entities(f'\nA.{answer_a} \nB.{answer_b} \nC.{answer_c} \nD.{answer_d}'))
         else:
             answer_a = answer_bank[0]
             answer_b = answer_bank[1]
@@ -154,5 +155,5 @@ def get_questions():
 ##Get Answers
 
 
-
+intro()
 
